@@ -241,6 +241,14 @@ foreach ($reader as $row) {
 }
 ```
 
+##### Trim headers
+
+The CSV reader not trim headers by default. Headers with leading or trailing
+whitespace will be trimmed using trim().
+
+To enable the ability to trim headers, set `$reader->setTrimHeaders(true)` after
+you instantiate the reader.
+
 ##### Strict mode
 
 The CSV reader operates in strict mode by default. If the reader encounters a
