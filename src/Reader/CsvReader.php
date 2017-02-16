@@ -66,6 +66,13 @@ class CsvReader implements CountableReader, \SeekableIterator
     protected $strict = true;
 
     /**
+     * Trim headers when parsing
+     *
+     * @var boolean
+     */
+    protected $trimHeaders = false;
+
+    /**
      * How to handle duplicate headers
      *
      * @var integer
@@ -309,6 +316,26 @@ class CsvReader implements CountableReader, \SeekableIterator
     }
 
     /**
+     * Set trim headers
+     *
+     * @param boolean $trimHeaders
+     */
+    public function setTrimHeaders($trimHeaders)
+    {
+        $this->trimHeaders = $trimHeaders;
+    }
+
+    /**
+     * Should the reader trim headers when parsing?
+     *
+     * @return boolean
+     */
+    public function isTrimHeaders()
+    {
+        return $this->trimHeaders;
+    }
+
+    /**
      * Set strict parsing
      *
      * @param boolean $strict
@@ -331,6 +358,10 @@ class CsvReader implements CountableReader, \SeekableIterator
     {
         $this->file->seek($rowNumber);
         $headers = $this->file->current();
+
+        if ($this->isTrimHeaders()) {
+            $headers = array_map('trim', $headers);
+        }
 
         // Test for duplicate column headers
         $diff = array_diff_assoc($headers, array_unique($headers));
