@@ -59,7 +59,7 @@ class ValidatorStep implements PriorityStep
      */
     public function add($field, Constraint $constraint)
     {
-        if (!isset($this->constraints[$field])) {
+        if (!isset($this->constraints['fields'][$field])) {
             $this->constraints['fields'][$field] = [];
         }
 
